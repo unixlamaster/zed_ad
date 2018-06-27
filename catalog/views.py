@@ -12,3 +12,14 @@ def index(request):
     }
 #    return render(request, 'main.htm')
     return HttpResponse(template.render(context, request))
+    
+def prices(request):
+#    return HttpResponse("<h2>Hi !!!</h2>")
+    template = loader.get_template('prices.htm')
+    context = {
+        '1': 1,
+        'title_html': "Prices",
+        'body_html': "Site",
+    }
+#    return render(request, 'main.htm')
+    return HttpResponse(template.render(context, request))
