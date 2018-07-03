@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from django.core import serializers
+from catalog.models import Price
 
 def index(request):
 #    return HttpResponse("<h2>Hi !!!</h2>")
@@ -23,3 +25,8 @@ def prices(request):
     }
 #    return render(request, 'main.htm')
     return HttpResponse(template.render(context, request))
+
+def prices_asJson(request):
+    price_list = Price.objects.all()
+    json = serializers.serialize('json', price_list)
+    return HttpResponse(json, content_type='application/json')
