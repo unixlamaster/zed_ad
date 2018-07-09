@@ -24,6 +24,6 @@ from catalog import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('catalog/', include('catalog.urls')),
-    path('prices/', views.prices_asJson, name="my_cattab_url"),
+    path('prices/', views.prices_asJson, name="my_price_data_url"),
     path('', RedirectView.as_view(url='/catalog/', permanent=True)),
 ]

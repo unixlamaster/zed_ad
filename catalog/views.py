@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-from django.core import serializers
+from django.http import JsonResponse
 from catalog.models import Price
 
 def index(request):
@@ -27,6 +27,25 @@ def prices(request):
     return HttpResponse(template.render(context, request))
 
 def prices_asJson(request):
-    price_list = Price.objects.all()
-    json = serializers.serialize('json', price_list)
-    return HttpResponse(json, content_type='application/json')
+#    import pdb; pdb.set_trace()
+    from django.forms.models import model_to_dict
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.error(request.GET['search[value]'])
+    pre_data = Price.objects.filter(oemnumber__iregex=r""+request.GET['search[value]'])
+    logger.error(pre_data)
+    pprice_list=[]
+    for p in pre_data:
+        d = model_to_dict(p)
+        if len(d['oemnumber'])>40:
+            d['oemnumber']=d['oemnumber'][:40]+"..."
+        d['link'] = "<a href=#><i class='fa fa-shopping-cart' style='font-size: 20px;'></i></a>"
+        pprice_list.append(d)
+    respons = {
+        "draw":request.GET['draw'],
+        "recordsTotal":100,
+        "recordsFiltered": 10,
+        "data": pprice_list
+    }
+#    logger.error(JsonResponse(respons, safe=False))
+    return JsonResponse(respons, safe=False)

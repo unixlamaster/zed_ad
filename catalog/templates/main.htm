@@ -221,7 +221,7 @@
           <h3>Каталог</h3>
         </div>
 
-		<table id="cattab"> 
+		<table id="cattab" style="font-size: 8px;"> 
 		  <thead>
 		      <tr>
 		          <th>Номенклатура</th>
@@ -394,20 +394,19 @@
   <script>
 	  $(document).ready(function() {
 	      $('#cattab').DataTable({
-             "ajax": {
-                 "processing": true,
-                 "url": "{% url 'my_cattab_url' %}",
-                 "dataSrc": ""
-			 },
+             "processing": true,
+			 "serverSide": true,
+             "ajax": "{% url 'my_price_data_url' %}",
 
              "columns": [
-				 { "data": "fields.nomenclature" },
-				 { "data": "fields.brend"},
-				 { "data": "fields.articul"},
-				 { "data": "fields.describe"},
-				 { "data": "fields.cost"},
-				 { "data": "fields.catnumber"},
-				 { "data": "fields.oemnumber"},
+				 { "data": "nomenclature" },
+				 { "data": "brend"},
+				 { "data": "articul"},
+				 { "data": "describe"},
+				 { "data": "cost"},
+				 { "data": "catnumber"},
+				 { "data": "oemnumber"},
+				 { "data": "link"},
                  ]
              });
 	  } );
