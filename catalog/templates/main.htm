@@ -61,6 +61,7 @@
             </ul>
           </li> -->
           <li><a href="#contact">Контакты</a></li>
+		  <li><a class="btn btn-lg btn-success"><span id="basket" class="icon icon-shopping-cart icon-2x"></span></a></li>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
@@ -325,9 +326,9 @@
           <div class="col-lg-3 col-md-6 footer-links">
             <h4>Ссылки</h4>
             <ul>
-              <li><i class="ion-ios-arrow-right"></i> <a href="#">Главная</a></li>
-              <li><i class="ion-ios-arrow-right"></i> <a href="#">О компании</a></li>
-              <li><i class="ion-ios-arrow-right"></i> <a href="#">Каталог</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="#intro">Главная</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="#about">О компании</a></li>
+              <li><i class="ion-ios-arrow-right"></i> <a href="#catalog">Каталог</a></li>
               <li><i class="ion-ios-arrow-right"></i> <a href="#">Пользовательское соглашение</a></li>
               <li><i class="ion-ios-arrow-right"></i> <a href="#">Политика конфиденциальности</a></li>
             </ul>
@@ -407,9 +408,79 @@
 				 { "data": "catnumber"},
 				 { "data": "oemnumber"},
 				 { "data": "link"},
-                 ]
-             });
-	  } );
+                 ],
+			 "language": {
+			         processing:     "Идет загрузка...",
+			         search:         "Найти&nbsp;:",
+			         lengthMenu:    "",
+			         info:           "Cтроки с _START_ по _END_, всего _TOTAL_",
+			         infoFiltered:   "",
+			         emptyTable:     "пусто",
+			         paginate: {
+			             first:      "",
+			             previous:   "Пред.",
+			             next:       "След.",
+			             last:       ""
+			         }
+			     },
+			 'lengthMenu': [ [10], [10] ], 
+			  aoColumnDefs: [
+				   {
+				      bSortable: false,
+				      aTargets: [ -1 ]
+				   }
+				 ]
+			 });
+	});
+	$(document).on('init.dt',function() {		 
+  	$('.fly-to-basket').on('click', function (e) {
+  		var elements = {
+  			flyer  : $( $(this).attr('data-fly-to-basket') ), // get element to fly
+  			basket : $('#basket') // get destination 
+		};
+  		var options = {
+  			position : {
+  				origin: {
+            	// get initial position on document
+  					initial: elements.flyer.offset(),
+            	// amout of pixels to move the cloned element from the original before flying to the basket
+  					offset: { x: 5, y: 15 }
+  				},
+  				destination: {
+            	// get initial position on document
+  					initial: elements.basket.offset()
+  				}
+  			}
+  		};
+		console.log(elements.basket.length);
+  		if ( elements.flyer.length && elements.basket.length )
+  		{ // allow only 1 cloned element
+  			if ( $('#fly-to-basket').length ) {  $('#fly-to-basket').remove(); }
+			console.log("3");
+ 			// clone original element and set initial position
+  			elements.flyer.clone().attr('id','fly-to-basket').appendTo('body')
+  			.css('box-shadow','0px 1px 10px 5px rgba(0,0,0,.15)')
+  			.css('position','absolute')
+  			.css('top',options.position.origin.initial.top)
+  			.css('left',options.position.origin.initial.left);
+  			// make it fly!
+  			$('#fly-to-basket').animate(
+  				{ top: options.position.origin.initial.top - options.position.origin.offset.y, left: options.position.origin.initial.left - options.position.origin.offset.x }, 400,
+  				function(){
+  					$('#fly-to-basket').delay(100).animate(
+  						{ top: options.position.destination.initial.top, left: options.position.destination.initial.left, width: '20px', height: '20px' }, 750, 'easeInOutExpo',
+  						function(){ $('#fly-to-basket').fadeOut(500, function(){
+  								elements.basket.effect( "bounce", "slow" );
+  							});
+  						}
+  					);
+  				}
+  			);
+  		}
+		return false;
+  	});
+ } );
+	  
 	  </script>
   <!-- Contact Form JavaScript File -->
   <script src="{% static "contactform/contactform.js"%}"></script>
