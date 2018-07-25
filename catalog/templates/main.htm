@@ -61,7 +61,7 @@
             </ul>
           </li> -->
           <li><a href="#contact">Контакты</a></li>
-		  <li><a class="btn btn-lg btn-success"><span id="basket" class="icon icon-shopping-cart icon-2x"></span></a></li>
+		  <li><a class="btn btn-lg btn-success" style="display:none;" id="aBasket" href="#basketList"><span id="basket" class="icon icon-shopping-cart icon-2x"></span></a></li>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
@@ -189,7 +189,7 @@
               </div>
               <h2 class="title"><a href="#">Наш план</a></h2>
               <p>
-				Мы готовы предложить выгодные цены на все товары. Мы занимаемся продажей автозапчастей, как иностранных, так и отечественных автомобилей, как с розничными, так и с оптовыми покупателями, в результате чего, имеем возможность взаимодействия с клиентами на любом уровне.
+				Мы готовы предложить выгодные цены на все товары. Мы занимаемся продажей автозапчастей, как с розничными, так и с оптовыми покупателями.
               </p>
             </div>
           </div>
@@ -215,12 +215,12 @@
     <!--==========================
       Catalog Section
     ============================-->
-    <section id="catalog" class="section-bg wow fadeInUp">
+    <section id="catalog">
       <div class="container">
 
-        <div class="section-header">
+        <header class="section-header">
           <h3>Каталог</h3>
-        </div>
+        </<header>
 
 		<table id="cattab" style="font-size: 8px;"> 
 		  <thead>
@@ -239,7 +239,36 @@
 		  </tbody>
 		 </table>
       </div>
-    </section><!-- #about -->
+    </section><!-- #catalog -->
+	
+    <!--==========================
+      Basket list Section
+    ============================-->
+    <section id="basketList" class="section-bg wow fadeInUp" >
+      <div class="container" style="display:none;" id="basketdiv">
+
+        <div class="section-header">
+          <h3>Корзина</h3>
+        </div>
+
+		<table id="baskettab" style="font-size: 8px;"> 
+		  <thead>
+		      <tr>
+		          <th>Номенклатура</th>
+		          <th>Бренд</th>
+		          <th>Артикул</th>
+				  <th>Описание</th>
+				  <th>Стоимость</th>
+				  <th>Номер в каталоге</th>
+				  <th>OEM</th>
+				  <th>Кол-во</th>
+		      </tr>
+		  </thead>
+		  <tbody>
+		  </tbody>
+		 </table>
+      </div>
+    </section><!-- #basketList -->
 	
     <!--==========================
       Contact Section
@@ -431,9 +460,9 @@
 				   }
 				 ]
 			 });
-	});
-	$(document).on('init.dt',function() {		 
-  	$('.fly-to-basket').on('click', function (e) {
+// -------------------------------------
+	  $('#cattab').on('click', '.fly-to-basket', function (e) {
+		if ($('#aBasket').css("display") == "none") { $('#aBasket').show(); }
   		var elements = {
   			flyer  : $( $(this).attr('data-fly-to-basket') ), // get element to fly
   			basket : $('#basket') // get destination 
@@ -452,17 +481,14 @@
   				}
   			}
   		};
-		console.log(elements.basket.length);
+//		console.log(elements.basket.length);
   		if ( elements.flyer.length && elements.basket.length )
   		{ // allow only 1 cloned element
   			if ( $('#fly-to-basket').length ) {  $('#fly-to-basket').remove(); }
-			console.log("3");
  			// clone original element and set initial position
   			elements.flyer.clone().attr('id','fly-to-basket').appendTo('body')
-  			.css('box-shadow','0px 1px 10px 5px rgba(0,0,0,.15)')
-  			.css('position','absolute')
-  			.css('top',options.position.origin.initial.top)
-  			.css('left',options.position.origin.initial.left);
+  			.css('box-shadow','0px 1px 10px 5px rgba(0,0,0,.15)') .css('position','absolute')
+  			.css('top',options.position.origin.initial.top).css('left',options.position.origin.initial.left);
   			// make it fly!
   			$('#fly-to-basket').animate(
   				{ top: options.position.origin.initial.top - options.position.origin.offset.y, left: options.position.origin.initial.left - options.position.origin.offset.x }, 400,
@@ -470,7 +496,7 @@
   					$('#fly-to-basket').delay(100).animate(
   						{ top: options.position.destination.initial.top, left: options.position.destination.initial.left, width: '20px', height: '20px' }, 750, 'easeInOutExpo',
   						function(){ $('#fly-to-basket').fadeOut(500, function(){
-  								elements.basket.effect( "bounce", "slow" );
+ // 								elements.basket.effect( "bounce", "slow" );
   							});
   						}
   					);
@@ -478,9 +504,12 @@
   			);
   		}
 		return false;
-  	});
- } );
-	  
+  	  });
+// -------------------------------------
+	  $('#aBasket').on('click', function (e) { 	  
+		 $('#basketdiv').show(); 
+	  });
+	});  
 	  </script>
   <!-- Contact Form JavaScript File -->
   <script src="{% static "contactform/contactform.js"%}"></script>

@@ -693,51 +693,114 @@ body.mobile-nav-active #mobile-nav-toggle {
   padding: 0 20px 20px 20px;
 }
 
-/* Services Section
+/* catalog Section
 --------------------------------*/
-#services {
+#catalog {
   background: #fff;
   background-size: cover;
   padding: 60px 0 40px 0;
 }
-
-#services .box {
+#catalog::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.92);
+  z-index: 9;
+}
+#catalog .box {
   margin-bottom: 30px;
 }
 
-#services .icon {
+#catalog .icon {
   float: left;
 }
 
-#services .icon i {
+#catalog .icon i {
   color: #18d26e;
   font-size: 36px;
   line-height: 1;
   transition: 0.5s;
 }
 
-#services .title {
+#catalog .title {
   margin-left: 60px;
   font-weight: 700;
   margin-bottom: 15px;
   font-size: 18px;
 }
 
-#services .title a {
+#catalog .title a {
   color: #111;
 }
 
-#services .box:hover .title a {
+#catalog .box:hover .title a {
   color: #18d26e;
 }
 
-#services .description {
+#catalog .description {
   font-size: 14px;
   margin-left: 60px;
   line-height: 24px;
   margin-bottom: 0;
 }
 
+
+/* catalog Section
+--------------------------------*/
+#basketList {
+  background: #fff;
+  background-size: cover;
+  padding: 60px 0 40px 0;
+}
+#basketList::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.92);
+  z-index: 9;
+}
+#basketList .box {
+  margin-bottom: 30px;
+}
+
+#basketList .icon {
+  float: left;
+}
+
+#basketList .icon i {
+  color: #18d26e;
+  font-size: 36px;
+  line-height: 1;
+  transition: 0.5s;
+}
+
+#basketList .title {
+  margin-left: 60px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+#basketList .title a {
+  color: #111;
+}
+
+#basketList .box:hover .title a {
+  color: #18d26e;
+}
+
+#basketList .description {
+  font-size: 14px;
+  margin-left: 60px;
+  line-height: 24px;
+  margin-bottom: 0;
+}
 /* Call To Action Section
 --------------------------------*/
 #call-to-action {
