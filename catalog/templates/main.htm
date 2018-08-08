@@ -411,6 +411,8 @@
   <script src="{% static "lib/touchSwipe/jquery.touchSwipe.min.js"%}"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
   <script>
+	  var baskettab;
+	  
 	  $(document).ready(function() {
 	      $('#cattab').DataTable({
              "processing": true,
@@ -448,9 +450,10 @@
 				      aTargets: [ -1 ]
 				   }
 				 ]
-			 });
+			 })
+		 });
 // -------------------------------------
-	  $('#cattab').on('click', '.fly-to-basket', function (e) {
+	$('#cattab').on('click', '.fly-to-basket', function (e) {
 		if ($('#aBasket').css("display") == "none") { $('#aBasket').show(); }
   		var elements = {
   			flyer  : $( $(this).attr('data-fly-to-basket') ), // get element to fly
@@ -458,26 +461,22 @@
 		};
   		var options = {
   			position : {
-  				origin: {
-            	// get initial position on document
+  				origin: {// get initial position on document
   					initial: elements.flyer.offset(),
             	// amout of pixels to move the cloned element from the original before flying to the basket
   					offset: { x: 5, y: 15 }
   				},
-  				destination: {
-            	// get initial position on document
+  				destination: {// get initial position on document
   					initial: elements.basket.offset()
   				}
   			}
   		};
-//		console.log(elements.basket.length);
   		if ( elements.flyer.length && elements.basket.length )
   		{ // allow only 1 cloned element
   			if ( $('#fly-to-basket').length ) {  $('#fly-to-basket').remove(); }
  			// clone original element and set initial position
   			elements.flyer.clone().attr('id','fly-to-basket').appendTo('body')
-  			.css('box-shadow','0px 1px 10px 5px rgba(0,0,0,.15)') .css('position','absolute')
-  			.css('top',options.position.origin.initial.top).css('left',options.position.origin.initial.left);
+  			.css('box-shadow','0px 1px 10px 5px rgba(0,0,0,.15)').css('position','absolute') 			.css('top',options.position.origin.initial.top).css('left',options.position.origin.initial.left);
   			// make it fly!
   			$('#fly-to-basket').animate(
   				{ top: options.position.origin.initial.top - options.position.origin.offset.y, left: options.position.origin.initial.left - options.position.origin.offset.x }, 400,
@@ -491,14 +490,54 @@
   					);
   				}
   			);
-  		}
-		return false;
-  	  });
+  		};
+// -----------------------------
+// send to server click item=item{idprice}	
+		var priceid = $(this).attr('data-fly-to-basket').match(/\d+/)[0];
+		$.getJSON("{% url 'basket_item_add_url' %}?item="+priceid.toString(),
+		   function(data) {
+			   baskettab.row.add(data['data']).draw( false );
+		    }
+		);
 // -------------------------------------
-	  $('#aBasket').on('click', function (e) { 	  
+	  	$('#aBasket').on('click', function (e) { 	  
 		 $('#basketdiv').show(); 
-	  });
-	});  
+	  	});
+	}); 
+// -------------------------------------	
+  $(document).ready(function() {
+      baskettab = $('#baskettab').DataTable({
+           "processing": true,
+		   "serverSide": true,
+           "ajax": "{% url 'my_basket_data_url' %}",
+
+           "columns": [
+			 { "data": "nomenclature" },
+			 { "data": "brend"},
+			 { "data": "articul"},
+			 { "data": "describe"},
+			 { "data": "cost"},
+			 { "data": "catnumber"},
+			 { "data": "oemnumber"},
+			 { "data": "count"},
+               ],
+		 "language": {
+		         processing:     "Идет загрузка...",
+		         search:         "Найти&nbsp;:",
+		         lengthMenu:    "",
+		         info:           "Cтроки с _START_ по _END_, всего _TOTAL_",
+		         infoFiltered:   "",
+		         emptyTable:     "пусто"
+		     },
+		 'lengthMenu': [ [10], [10] ], 
+		  aoColumnDefs: [
+			   {
+			      bSortable: false,
+			      aTargets: [ -1 ]
+			   }
+			 ]
+		 }); 
+	 });
 	  </script>
   <!-- Contact Form JavaScript File -->
   <script src="{% static "contactform/contactform.js"%}"></script>

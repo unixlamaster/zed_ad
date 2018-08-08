@@ -392,7 +392,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Mobile Nav Toggle */
 #mobile-nav-toggle {
   position: fixed;
-  right: 0;
+  left: 0;
   top: 0;
   z-index: 999;
   margin: 20px 20px 0 0;

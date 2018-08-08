@@ -1,4 +1,8 @@
+from django.conf import settings
 from django.db import models
+from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
+from datetime import datetime
 
 # Create your models here.
 
@@ -20,4 +24,9 @@ class Price(models.Model):
     availability = models.IntegerField(null=False, blank=False, default=0)
     delivery = models.IntegerField(null=False, blank=False, default=0)
     catnumber = models.CharField(max_length=50)
-    oemnumber = models.CharField(max_length=2048) 
+    oemnumber = models.CharField(max_length=2048)
+
+class UserSession(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,)
+    session = models.ForeignKey(Session,on_delete=models.CASCADE,)
+    create_date = models.DateField(auto_now=True)
