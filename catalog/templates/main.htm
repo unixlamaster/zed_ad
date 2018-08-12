@@ -28,14 +28,14 @@
 
   <!-- Main Stylesheet File -->
   <link href={% static "css/style.css"%} rel="stylesheet">
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
-{% block body %}
   <!--==========================
     Header
   ============================-->
+ {% block header %}
   <header id="header">
     <div class="container-fluid">
 
@@ -50,12 +50,13 @@
           <li><a href="#about">О компании</a></li>
           <li><a href="#catalog">Каталог</a></li>
           <li><a href="#contact">Контакты</a></li>
-		  <li><a style="display:none;" id="aBasket" href="#basketList"><span id="basket"><img src="{% static "img/basket.png"%}"></span></a></li>
+		  <li><a style="display:{{ basket_show_hidden }};" id="aBasket" href="#basketList"><span id="basket"><img src="{% static "img/basket.png"%}"></span>Корзина</a></li>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
   </header><!-- #header -->
-
+  {% endblock %}
+  {% block body %}
   <!--==========================
     Intro Section
   ============================-->
@@ -234,7 +235,7 @@
       Basket list Section
     ============================-->
     <section id="basketList">
-      <div class="container" style="display:none;" id="basketdiv">
+      <div class="container" style="display:{{ basket_show_hidden }};" id="basketdiv">
 
         <div class="section-header">
           <h3>Корзина</h3>
@@ -243,19 +244,21 @@
 		<table id="baskettab" style="font-size: 8px;"> 
 		  <thead>
 		      <tr>
-		          <th>Номенклатура</th>
-		          <th>Бренд</th>
-		          <th>Артикул</th>
-				  <th>Описание</th>
-				  <th>Стоимость</th>
-				  <th>Номер в каталоге</th>
-				  <th>OEM</th>
-				  <th>Кол-во</th>
+		          <th class="no-sort">Номенклатура</th>
+		          <th class="no-sort">Бренд</th>
+		          <th class="no-sort">Артикул</th>
+				  <th class="no-sort">Описание</th>
+				  <th class="no-sort">Стоимость</th>
+				  <th class="no-sort">Номер в каталоге</th>
+				  <th class="no-sort">OEM</th>
+				  <th class="no-sort">Кол-во</th>
 		      </tr>
 		  </thead>
 		  <tbody>
 		  </tbody>
 		 </table>
+		 <p>
+		 <div class="text-center pull-right"><button type="submit">Заказать</button></div>
       </div>
     </section><!-- #basketList -->
 	
@@ -327,10 +330,11 @@
     </section><!-- #contact -->
 
   </main>
-
+  {% endblock %}
   <!--==========================
     Footer
   ============================-->
+  {% block footer %}
   <footer id="footer">
     <div class="footer-top">
       <div class="container">
@@ -392,10 +396,11 @@
       </div>
     </div>
   </footer><!-- #footer -->
-
+  
   <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
-
+  {% endblock %}
   <!-- JavaScript Libraries -->
+  {% block javascript %}
   <script src="{% static "lib/jquery/jquery.min.js"%}"></script>
   <script src="{% static "lib/jquery/jquery-migrate.min.js"%}"></script>
   <script src="{% static "lib/bootstrap/js/bootstrap.bundle.min.js"%}"></script>
@@ -496,13 +501,14 @@
 		var priceid = $(this).attr('data-fly-to-basket').match(/\d+/)[0];
 		$.getJSON("{% url 'basket_item_add_url' %}?item="+priceid.toString(),
 		   function(data) {
-			   baskettab.row.add(data['data']).draw( false );
+			   baskettab.row.add(data).draw();
 		    }
 		);
 // -------------------------------------
 	  	$('#aBasket').on('click', function (e) { 	  
 		 $('#basketdiv').show(); 
 	  	});
+		return false;
 	}); 
 // -------------------------------------	
   $(document).ready(function() {
@@ -510,7 +516,9 @@
            "processing": true,
 		   "serverSide": true,
            "ajax": "{% url 'my_basket_data_url' %}",
-
+		   "paging": false,
+		   "searching": false,
+		   "info":     false,
            "columns": [
 			 { "data": "nomenclature" },
 			 { "data": "brend"},
@@ -533,17 +541,35 @@
 		  aoColumnDefs: [
 			   {
 			      bSortable: false,
-			      aTargets: [ -1 ]
+			      aTargets: [ -1 ],
+				   "targets": 'no-sort',
+          		 "orderable": false,
+				   "order": []
 			   }
 			 ]
-		 }); 
-	 });
+	    });
+	});
+// -------------------------------------
+$(document).ready(function() {
+	 $('#baskettab').on('click', '.erase-basket-item', function(e) {
+   		   var item = $(this).attr('data-erase-item');
+		   var index = $(this).attr('data-index-item');
+
+   		   $.getJSON("{% url 'basket_item_del_url' %}?item="+item,
+   		   		function(data) { 
+				  baskettab.row($(this).parents('tr')).remove().draw();}
+			);
+			
+			return false;
+	  });
+  });
 	  </script>
   <!-- Contact Form JavaScript File -->
   <script src="{% static "contactform/contactform.js"%}"></script>
 
   <!-- Template Main Javascript File -->
   <script src="{% static "js/main.js"%}"></script>
-{% endblock %}
+  {% endblock %}
+
 </body>
 </html>
