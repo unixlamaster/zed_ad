@@ -1026,10 +1026,11 @@ body.mobile-nav-active #mobile-nav-toggle {
 /*  font-size: 48px;
   font-weight: 700; */
 }
+
 #login label {
 	color: #fff;
 }
 
-#login a {
+#login a.url-registr {
   color: #eee;
 }
