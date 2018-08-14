@@ -29,7 +29,7 @@ def index(request):
         '1': 1,
         'title_html': "Hi",
         'body_html': "Site",
-        "basket_show_hidden": "" if len(request.session.get("basket"))>0 else "none"
+        "basket_show_hidden": "" if type(request.session.get("basket"))==list and len(request.session.get("basket"))>0 else "none"
     }
 #    return render(request, 'main.htm')
     logger.error("--------------")
@@ -103,8 +103,8 @@ def basketList_asJson(request):
         "recordsTotal":len(data_basket),
         "data": data_basket
     }
-    logger.error("list_basket=")
-    logger.error(request.session['basket'])
+#    logger.error("list_basket=")
+#    logger.error(request.session['basket'])
     return JsonResponse(respons, safe=False)
     
 def basket_item_addJson(request):

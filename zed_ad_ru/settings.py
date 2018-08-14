@@ -25,7 +25,7 @@ SECRET_KEY = '&y26e)7*6!l@rxm+v&=%bj&(eda6kxnje@w!a1v^tr&m+hs!7x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["w2.zed-ad.ru","localhost"]
 
 
 # Application definition

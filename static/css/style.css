@@ -1009,20 +1009,27 @@ body.mobile-nav-active #mobile-nav-toggle {
   bottom: 0;
 }
   
-#login .login-container {
+/*#login .login-container {
     display: block;
     justify-content: center;
     align-items: center;
     position: absolute;
     bottom: 0;
-    top: 70;
-    left: 100;
+    top: 70px;
+    left: 100px;
     right: 0;
   text-align: center;
-}
+}*/
 
 #login h3 {
   color: #fff;
-  font-size: 48px;
-  font-weight: 700;
+/*  font-size: 48px;
+  font-weight: 700; */
+}
+#login label {
+	color: #fff;
+}
+
+#login a {
+  color: #eee;
 }
