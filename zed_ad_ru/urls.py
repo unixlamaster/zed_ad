@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from catalog import views
+from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,5 +30,6 @@ urlpatterns = [
     path('basket/index', views.basketList_asJson, name="my_basket_data_url"),
     path('basket/itemadd', views.basket_item_addJson, name="basket_item_add_url"),
     path('basket/itemdel', views.basket_item_delJson, name="basket_item_del_url"),
+    url(r'^accounts/', include('allauth.urls')),
     path('', RedirectView.as_view(url='/catalog/', permanent=True)),
 ]

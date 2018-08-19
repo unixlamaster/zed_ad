@@ -3,6 +3,8 @@ from . import views
 
 
 urlpatterns = [
-    url('/orders/login', views.login, name="order_login"),
-    url(r'^$', views.index, name="order_index_url"),
+    url('login', views.login_view, name="order_login_url"),
+    url('logout', views.logout_view, name="order_logout_url"),
+    url('registration', views.registration_view, name="order_registration_url"),
+    url(r'^$', views.index_view, name="order_index_url"),
 ]
