@@ -25,10 +25,51 @@
   {% endblock %}
   
 {% block body %}
- <section id="orders">
- wefwef
- wefwef
- wefwef
- </section>
+ <section id="order">
+ <!--==========================
+   Order list Section
+ ============================-->
+   <div class="h-100 order-section justify-content-center align-items-center">
+     <div class="container h-100">
+	   <div class="row h-100 justify-content-center align-items-center">
+	      <div class="col-6 justify-content-center align-items-center">
+			<div class="row section-header justify-content-center align-items-center">
+				<h3>Заказ</h3>
+			</div>
+			<div class="row justify-content-center align-items-center">
+
+            	<table id="ordertab" class="table table-dark"> 
+            	  <thead>
+            	      <tr>
+                          <th cscope="col">#</th>
+            	          <th cscope="col">Номенклатура</th>
+            	          <th cscope="col">Бренд</th>
+            	          <th cscope="col">Артикул</th>
+            			  <th cscope="col">Описание</th>
+            			  <th cscope="col">Стоимость</th>
+            			  <th cscope="col">Номер в каталоге</th>
+            			  <th cscope="col">OEM</th>
+            			  <th cscope="col">Кол-во</th>
+            	      </tr>
+            	  </thead>
+            	  <tbody>
+                    {% for row in data_basket %}
+                    <tr>
+                     <th scope="row">1</th>
+                       {% for col in row %}
+                         <td>{{ col }}</td>
+                       {% endfor %}
+                    </tr>
+                    {% endfor %}
+            	  </tbody>
+            	 </table>
+	 <p>
+	 <div class="text-center pull-right"><button type="submit">Заказать</button></div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+   </div>
+ </section><!-- #orderList -->
 {% endblock %}
 
