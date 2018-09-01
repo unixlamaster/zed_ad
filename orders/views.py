@@ -67,6 +67,7 @@ def registration_view(request):
 @login_required
 def index_view(request):
     data_basket=[]
+    summa = 0
     try:
         basket_session = request.session['basket']
     except KeyError:
@@ -74,13 +75,11 @@ def index_view(request):
     index=0
     for priceid in basket_session:
         item = Price.objects.get(id=priceid)
-        row = [item.nomenclature,item.brend,item.articul,item.describe,item.cost,item.catnumber]
-        if len(item.oemnumber)>40:
-            row.append(item.oemnumber[:40]+"...")
-        else:
-            row.append(item.oemnumber)
+        row = [item.nomenclature,item.describe,item.cost]
         index+=1
         row.append(basket_session[priceid])
+        summa+=basket_session[priceid]*item.cost
+        row.append(basket_session[priceid]*item.cost)
         data_basket.append(row)
         
     template = loader.get_template('orders.htm')
@@ -89,6 +88,7 @@ def index_view(request):
            'title_html': "Hi",
            'body_html': "Site",
            'data_basket': data_basket,
+           'summa': round(summa,2),
        }
 #    logger = logging.getLogger(__name__)
 #    logger.error("--------------")
