@@ -703,6 +703,12 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 /* Basket Section
 --------------------------------*/
+#basketList {
+    display: table;
+    width: 100%;
+    height: 100vh;
+    padding: 60px 0 40px 0;
+}
 #basketList button[type="submit"] {
   background: #18d26e;
   border: 0;

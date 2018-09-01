@@ -29,11 +29,11 @@ def index(request):
         '1': 1,
         'title_html': "Hi",
         'body_html': "Site",
-        "basket_show_hidden": "" if type(request.session.get("basket"))==list and len(request.session.get("basket"))>0 else "none"
+        "basket_show_hidden": "" if type(request.session.get("basket"))==dict and len(request.session.get("basket"))>0 else "none"
     }
 #    return render(request, 'main.htm')
     logger.error("--------------")
-#    check_session(request)
+    logger.error(request.session.get('basket'))
     return HttpResponse(template.render(context, request))
     
 def prices(request):

@@ -1,4 +1,6 @@
 {% load static %}
+{% load account %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,11 +49,17 @@
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-          <li class="menu-active"><a href="#intro">Главная</a></li>
-          <li><a href="#about">О компании</a></li>
-          <li><a href="#catalog">Каталог</a></li>
-          <li><a href="#contact">Контакты</a></li>
-		  <li><a style="display:{{ basket_show_hidden }};" id="aBasket" href="#basketList"><span id="basket"><img src="{% static "img/basket.png"%}"></span>Корзина</a></li>
+          <li class="menu-active"><a href="/catalog/#intro">Главная</a></li>
+          <li><a href="/catalog/#about">О компании</a></li>
+          <li><a href="/catalog/#catalog">Каталог</a></li>
+          <li><a href="/catalog/#contact">Контакты</a></li>
+		  <li><a style="display:{{ basket_show_hidden }};" id="aBasket" href="/catalog/#basketList"><span id="basket"><img src="{% static "img/basket.png"%}"> </span>Корзина</a></li>
+          <li class="menu-has-children"><a href=/accounts/email/>{% user_display user %}</a>
+            <ul>
+                <li><a href=/orders>Заказ</a></li>
+                <li><a href=/accounts/logout>Выход</a></li>
+            </ul>
+          </li>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
@@ -236,7 +244,7 @@
       Basket list Section
     ============================-->
     <section id="basketList">
-      <div class="container" style="display:{{ basket_show_hidden }};" id="basketdiv">
+      <div class="container h-100" style="display:{{ basket_show_hidden }};" id="basketdiv">
 
         <div class="section-header">
           <h3>Корзина</h3>
@@ -259,7 +267,7 @@
 		  </tbody>
 		 </table>
 		 <p>
-		 <div class="text-center pull-right"><button type="submit">Заказать</button></div>
+		 <div class="text-center pull-right"><button type="submit" id="sub_order_button">Заказать</button></div>
       </div>
     </section><!-- #basketList -->
 	
@@ -563,6 +571,13 @@ $(document).ready(function() {
 			
 			return false;
 	  });
+  });
+  
+ // -------------------------------------
+$(document).ready(function() {
+  $('#sub_order_button').on('click', function () {
+        location.href = "/orders/";
+     }); 
   });
 	  </script>
 
