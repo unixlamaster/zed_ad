@@ -94,4 +94,11 @@ def index_view(request):
 #    logger.error("--------------")
     return HttpResponse(template.render(context, request))
 
+def confirm_order_view(request):
+    template = loader.get_template('confirm_order.htm')
+    context = {
+               'title_html': "Hi",
+               'response': "Заказ оформлен",
+            }
+    return HttpResponse(template.render(context, request))
 
