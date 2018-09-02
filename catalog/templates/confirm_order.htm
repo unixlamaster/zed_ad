@@ -1,0 +1,27 @@
+{% extends "main.htm" %}
+{% load static %}
+  
+{% block body %}
+ <section id="order">
+ <!--==========================
+   Order list Section
+ ============================-->
+   <div class="h-100 order-section justify-content-center align-items-center">
+     <div class="container h-100">
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-12 justify-content-center align-items-center">
+			<div class="row section-header justify-content-center align-items-center">
+				<h3>Заказ</h3>
+			</div>
+            <div class="row justify-content-md-center">
+             <div class="col-md-auto">
+                <h3>{{ response }}</h3>
+             </div>
+            </div>
+        </div>
+      </div>
+	 </div>
+   </div>
+ </section><!-- #orderList -->
+{% endblock %}
+
