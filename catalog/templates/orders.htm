@@ -29,9 +29,9 @@
             	      </tr>
             	  </thead>
             	  <tbody>
-                    {% for row in data_basket %}
+                    {% for i,row in data_basket %}
                     <tr>
-                     <th scope="row">1</th>
+                     <th scope="row">{{ i }}</th>
                        {% for col in row %}
                          <td>{{ col }}</td>
                        {% endfor %}
@@ -44,10 +44,10 @@
                     </tr>
             	  </tbody>
             	 </table>
-	 <p>
-	 <div class="text-center pull-right">
-         <form action=/>
-         <button type="submit" id="confirm_order_button">Отправить</button></div>
+            	 <p>
+            	 <div class="text-center pull-right">
+                     <button type="submit" id="confirm_order_button">Отправить</button>
+                 </div>
 			</div>
 		  </div>
 		</div>

@@ -53,7 +53,7 @@
           <li><a href="/catalog/#about">О компании</a></li>
           <li><a href="/catalog/#catalog">Каталог</a></li>
           <li><a href="/catalog/#contact">Контакты</a></li>
-		  <li><a style="display:{{ basket_show_hidden }};" id="aBasket" href="/catalog/#basketList"><span id="basket"><img src="{% static "img/basket.png"%}"> </span>Корзина</a></li>
+		  <li><a style="display:{{ basket_show_hidden }};" id="aBasket" href="/catalog/#basketlist"><span id="basket"><img src="{% static "img/basket.png"%}"> </span>Корзина</a></li>
           <li class="menu-has-children"><a href=/accounts/email/>{% user_display user %}</a>
             <ul>
                 <li><a href=/orders>Заказ</a></li>
@@ -243,7 +243,7 @@
     <!--==========================
       Basket list Section
     ============================-->
-    <section id="basketList">
+    <section id="basketlist">
       <div class="container h-100" style="display:{{ basket_show_hidden }};" id="basketdiv">
 
         <div class="section-header">
@@ -268,6 +268,7 @@
 		 </table>
 		 <p>
 		 <div class="text-center pull-right"><button type="submit" id="sub_order_button">Заказать</button></div>
+         
       </div>
     </section><!-- #basketList -->
 	

@@ -96,7 +96,7 @@ def basketList_asJson(request):
         if len(row['oemnumber'])>40:
             row['oemnumber']=row['oemnumber'][:40]+"..."
         index+=1
-        row["count"] = str(basket_session[priceid]) + "&nbsp;&nbsp;&nbsp;<a href=# class='erase-basket-item' data-erase-item='"+ str(priceid) +"' data-index-item='"+str(index)+"'><span class='glyphicon glyphicon-remove'></span></a>"
+        row["count"] = str(basket_session[priceid]) + "&nbsp;&nbsp;&nbsp;<font size=4px><a href=# class='erase-basket-item' data-erase-item='"+ str(priceid) +"' data-index-item='"+str(index)+"'><i class='icon ion-md-close large'></i></a></font>"
         
         data_basket.append(row)
     respons = {

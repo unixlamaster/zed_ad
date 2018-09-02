@@ -66,7 +66,7 @@ def registration_view(request):
     
 @login_required
 def index_view(request):
-    data_basket=[]
+    data_basket=[]   
     summa = 0
     try:
         basket_session = request.session['basket']
@@ -87,7 +87,7 @@ def index_view(request):
            '1': 1,
            'title_html': "Hi",
            'body_html': "Site",
-           'data_basket': data_basket,
+           'data_basket': zip(range(1,len(data_basket)+1),data_basket),
            'summa': round(summa,2),
        }
 #    logger = logging.getLogger(__name__)
