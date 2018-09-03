@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.http import JsonResponse
-from catalog.models import UserSession,Price
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.sessions.models import Session
 from django.forms.models import model_to_dict
 from django.contrib.auth.decorators import login_required
 import logging
+from catalog.models import UserSession,Price
+from orders.models import Order,OrderItem
 
 def login_view(request):
     logger = logging.getLogger(__name__)
@@ -37,7 +38,7 @@ def logout_view(request):
 def registration_view(request):
     input_errors=[]
     if bool(request.POST):
-        username = equest.POST['login']
+        username = request.POST['login']
         password=request.POST['password']
         if not password==request.POST['password2']:
             input_errors.append("password_mismatch")
@@ -95,10 +96,26 @@ def index_view(request):
     return HttpResponse(template.render(context, request))
 
 def confirm_order_view(request):
+    data_basket=[]   
+    summa = 0
+    order = Order(user=request.user,status="new",summa_invoice=0)
+    order.save()
+    try:
+        basket_session = request.session['basket']
+    except KeyError:
+        basket_session = {}
+    index=0
+    for priceid in basket_session:
+        item = Price.objects.get(id=priceid)
+        OrderItem.objects.create(order=order,priceitem=item,cost=item.cost,count=basket_session[priceid],provider=item.provider,nomenclature=item.nomenclature,brend=item.brend,articul=item.articul)
+        summa+=basket_session[priceid]*item.cost
+    order.summa_invoice = summa
+    order.save()
+    request.session['basket'] = {}
     template = loader.get_template('confirm_order.htm')
     context = {
                'title_html': "Hi",
-               'response': "Заказ оформлен",
+               'response': request.user.username+" Заказ оформлен",
             }
     return HttpResponse(template.render(context, request))
 

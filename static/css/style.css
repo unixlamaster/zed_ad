@@ -1075,10 +1075,14 @@ body.mobile-nav-active #mobile-nav-toggle {
   color: #eee;
 }
 
-#ordertab {
+.ordertabclass {
     color: #fff;
     font-size: 10px;
     width: 100%;
+}
+.ordertabclass thead th {
+  border-top: 0px !important; 
+  border-bottom: 2px solid #f00 !important;
 }
 
 #auth {
