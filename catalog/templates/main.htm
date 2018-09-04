@@ -54,12 +54,14 @@
           <li><a href="/catalog/#catalog">Каталог</a></li>
           <li><a href="/catalog/#contact">Контакты</a></li>
 		  <li><a style="display:{{ basket_show_hidden }};" id="aBasket" href="/catalog/#basketlist"><span id="basket"><img src="{% static "img/basket.png"%}"> </span>Корзина</a></li>
+          {% if has_login %}
           <li class="menu-has-children"><a href=/accounts/email/>{% user_display user %}</a>
             <ul>
                 <li><a href=/orders>Заказ</a></li>
                 <li><a href=/accounts/logout>Выход</a></li>
             </ul>
           </li>
+          {% endif %}
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>

@@ -6,43 +6,44 @@
  <!--==========================
    Order list Section
  ============================-->
-   <div class="h-100 order-section justify-content-center align-items-center">
-     <div class="container h-100">
-	   <div class="row h-100 justify-content-center align-items-center">
-	      <div class="col-12">
-			<div class="row section-header justify-content-center align-items-center">
-				<h3>Кабинет</h3>
-			</div>
-
-    {% if messages %}
-    <div>
-      <strong>Messages:</strong>
-      <ul>
-	{% for message in messages %}
-	<li>{{message}}</li>
-	{% endfor %}
-      </ul>
-    </div>
-    {% endif %}
-
-    <div>
-      <strong>Menu:</strong>
-      <ul>
-	{% if user.is_authenticated %}
-	<li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-	<li><a href="{% url 'account_logout' %}">Sign Out</a></li>
-	{% else %}
-	<li><a href="{% url 'account_login' %}">Sign In</a></li>
-	<li><a href="{% url 'account_signup' %}">Sign Up</a></li>
-	{% endif %}
-      </ul>
-    </div>
-    {% block content %}
-    {% endblock %}
-
-		  </div>
-		</div>
-	  </div>
+   <div class="order-section justify-content-center align-items-center">
+     <div class="container">
+	   <div class="row section-header justify-content-center align-items-center">
+	      <div class="col-sm">
+				<h3>Войти на сайт</h3>
+          </div>
+       </div>
+       {% if messages %}
+       <div class="row justify-content-center">
+          <div class="col-4">
+              <strong>Messages:</strong>
+                  <ul>
+            	{% for message in messages %}
+            	<li>{{message}}</li>
+            	{% endfor %}
+                  </ul>
+          </div>
+        </div>
+        {% endif %}
+        <div class="row justify-content-center">
+            <div class="col-4"> 
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="row justify-content-center">
+            <div class="col-4"> 
+                  <strong>Menu:</strong>
+                  <ul>
+                   	<li><a href="{% url 'account_email' %}">Change E-mail</a></li>
+                   	<li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+                  </ul>
+            </div>
+        </div>
+    	{% endif %}
+       </div>
+	</div>
    </div>
  </section><!-- #authList -->    
     {% endblock %}

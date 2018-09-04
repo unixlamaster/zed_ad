@@ -4,6 +4,7 @@ from django.template import loader
 from django.http import JsonResponse
 from catalog.models import UserSession,Price
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.sessions.models import Session
 from django.forms.models import model_to_dict
 import logging
@@ -25,11 +26,15 @@ def index(request):
 #    return HttpResponse("<h2>Hi !!!</h2>")
     logger = logging.getLogger(__name__)
     template = loader.get_template('main.htm')
+    logger.error("--------------")
+    logger.error(request.user)
+
     context = {
         '1': 1,
         'title_html': "Hi",
         'body_html': "Site",
-        "basket_show_hidden": "" if type(request.session.get("basket"))==dict and len(request.session.get("basket"))>0 else "none"
+        "basket_show_hidden": "" if type(request.session.get("basket"))==dict and len(request.session.get("basket"))>0 else "none",
+        "has_login": request.user.is_authenticated(),
     }
 #    return render(request, 'main.htm')
     logger.error("--------------")
