@@ -10,61 +10,8 @@ from django.contrib.auth.decorators import login_required
 import logging
 from catalog.models import UserSession,Price
 from orders.models import Order,OrderItem
-
-def login_view(request):
-    logger = logging.getLogger(__name__)
-    logger.error("--------------")
-    logger.error(request.POST)
-    login_alert = 0
-    if bool(request.POST):
-        user = authenticate(username=request.POST['login'], password=request.POST['password'])
-        if user is not None and user.is_active:
-            login(request, user)
-            return redirect('/orders')
-        login_alert = 1
-    template = loader.get_template('auth.htm')
-    context = {
-        '1': 1,
-        'title_html': "Hi",
-        'body_html': "Site",
-        'login_alert': login_alert,
-    }
-    return HttpResponse(template.render(context, request))
-    
-def logout_view(request):
-    logout(request)
-    return redirect('/orders/login')
-
-def registration_view(request):
-    input_errors=[]
-    if bool(request.POST):
-        username = request.POST['login']
-        password=request.POST['password']
-        if not password==request.POST['password2']:
-            input_errors.append("password_mismatch")
-        else:
-            try:
-                user = User.objects.get(username=username)
-            except DoesNotExist:
-                newuser = User.objects.create(username=username,password=password,email=username)
-                
-            else:
-                input_errors.append("email_exist")
-            
-        if user is not None and user.is_active:
-            login(request, user)
-            return redirect('/orders')
-        login_alert = 1
-    
-    template = loader.get_template('registration.htm')
-    context = {
-           '1': 1,
-           'title_html': "Hi",
-           'body_html': "Site",
-           "input_errors": input_errors
-       }
-    return HttpResponse(template.render(context, request))
-    
+from django.core.mail import EmailMultiAlternatives
+   
 @login_required
 def index_view(request):
     data_basket=[]   
@@ -89,13 +36,33 @@ def index_view(request):
            'title_html': "Hi",
            'body_html': "Site",
            'data_basket': zip(range(1,len(data_basket)+1),data_basket),
+           "basket_menu_show": True,
            'summa': round(summa,2),
-           'has_login': true,
        }
 #    logger = logging.getLogger(__name__)
 #    logger.error("--------------")
     return HttpResponse(template.render(context, request))
 
+def send_order2email(order_id):
+    data_basket=[]   
+    summa = 0
+    template = loader.get_template('order2email.htm')
+    subject = "Order №"+str(order_id)
+    order = Order.objects.get(id=order_id)
+    order_items = order.orderitem_set.all()
+    index=0
+    for item in order_items:
+        summa+=item.count*item.cost
+        data_basket.append([item.nomenclature,item.articul,item.cost,item.count,item.count*item.cost])
+    context = { 'order_items': zip(range(1,len(data_basket)+1),data_basket),
+                "order_id": order_id,
+                "summa": round(summa,2),
+                 "user": order.user.first_name+" "+order.user.last_name+" ("+order.user.username+")" }
+    html_content = template.render(context)
+    msg = EmailMultiAlternatives(subject, "", "", ["unixlamaster@mail.ru"])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
+    
 def confirm_order_view(request):
     data_basket=[]   
     summa = 0
@@ -110,13 +77,15 @@ def confirm_order_view(request):
         item = Price.objects.get(id=priceid)
         OrderItem.objects.create(order=order,priceitem=item,cost=item.cost,count=basket_session[priceid],provider=item.provider,nomenclature=item.nomenclature,brend=item.brend,articul=item.articul)
         summa+=basket_session[priceid]*item.cost
-    order.summa_invoice = summa
+    order.summa_invoice = round(summa,2)
     order.save()
+    send_order2email(order.id)
     request.session['basket'] = {}
     template = loader.get_template('confirm_order.htm')
     context = {
                'title_html': "Hi",
-               'response': request.user.username+" Заказ оформлен",
+               'user': "Пользователь: "+request.user.username,
+               'response': "Ваш заказ №"+str(order.id)+" оформлен",
             }
     return HttpResponse(template.render(context, request))
 

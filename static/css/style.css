@@ -544,6 +544,40 @@ body.mobile-nav-active #mobile-nav-toggle {
   left: calc(50% - 20px);
 }
 
+.section-header h4 {
+  font-size: 18px;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 700;
+  position: relative;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.section-header h4::before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 120px;
+  height: 1px;
+  background: #ddd;
+  bottom: 1px;
+  left: calc(50% - 60px);
+}
+
+.section-header h4::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: #18d26e;
+  bottom: 0;
+  left: calc(50% - 20px);
+}
+
+
 .section-header p {
   text-align: center;
   padding-bottom: 30px;
@@ -1085,6 +1119,12 @@ body.mobile-nav-active #mobile-nav-toggle {
   border-bottom: 3px solid #18d26e !important;
 }
 
+
+#allauth-content h1 { font-size: 18px; }
+#allauth-content .email_list { padding-bottom: 20px }
+
+#allauth-content h2 { font-size: 18px; }
+
 #auth {
     display: table;
     width: 100%;
@@ -1118,4 +1158,8 @@ body.mobile-nav-active #mobile-nav-toggle {
  color: #fff;   
  text-align: center;
  padding: 20px 10px;
+}
+
+.auth_messages  {
+  color: #fff;
 }

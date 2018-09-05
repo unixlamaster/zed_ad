@@ -1,0 +1,29 @@
+<h3>Заказ № {{ order_id }}</h3>
+Пользователь - <a href=#>{{ user }}</a>
+<table> 
+  <thead>
+      <tr>
+          <th cscope="col">#</th>
+          <th cscope="col">Номенклатура</th>
+		  <th cscope="col">Описание</th>
+		  <th cscope="col">Цена</th>
+		  <th cscope="col">Кол-во</th>
+          <th cscope="col">Стоимость</th>
+      </tr>
+  </thead>
+  <tbody>
+    {% for i,row in order_items %}
+    <tr>
+     <td>{{ i }}</td>
+       {% for col in row %}
+         <td>{{ col }}</td>
+       {% endfor %}
+    </tr>
+    {% endfor %}
+    <tr>
+        <td colspan=5>&nbsp;</td>
+        <td><b>{{ summa }}</b>
+        </td>
+    </tr>
+  </tbody>
+</table>

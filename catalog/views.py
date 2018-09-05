@@ -8,50 +8,25 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.sessions.models import Session
 from django.forms.models import model_to_dict
 import logging
-
-def check_session(request):
-    logger = logging.getLogger(__name__)
-    if not request.session.session_key:
-        request.session.save()
-    session_id = request.session.session_key
-#        user = User.objects.get(id=2)
-#        logger.error(request.session.model()) 
-#        snew = UserSession(user=user,session=request.session.model())
-##        snew.save()
-#        logger.error(snew.id)   
-#        id = request.session['id'] = snew.id
-
     
 def index(request):
 #    return HttpResponse("<h2>Hi !!!</h2>")
     logger = logging.getLogger(__name__)
     template = loader.get_template('main.htm')
-    logger.error("--------------")
-    logger.error(request.user)
+#    logger.error("--------------")
+#    logger.error(request.user.is_authenticated)
 
     context = {
         '1': 1,
         'title_html': "Hi",
         'body_html': "Site",
-        "basket_show_hidden": "" if type(request.session.get("basket"))==dict and len(request.session.get("basket"))>0 else "none",
-        "has_login": request.user.is_authenticated(),
-    }
+        "basket_menu_show": True if type(request.session.get("basket"))==dict and len(request.session.get("basket"))>0 else False,
+     }
 #    return render(request, 'main.htm')
-    logger.error("--------------")
-    logger.error(request.session.get('basket'))
+#    logger.error("--------------")
+#    logger.error(request.session.get('basket'))
     return HttpResponse(template.render(context, request))
     
-def prices(request):
-#    return HttpResponse("<h2>Hi !!!</h2>")
-    template = loader.get_template('prices.htm')
-    context = {
-        '1': 1,
-        'title_html': "Prices",
-        'body_html': "Site",
-    }
-#    return render(request, 'main.htm')
-    return HttpResponse(template.render(context, request))
-
 def sorted_field(request):
     fields = ['nomenclature', 'brend', 'articul', 'describe', 'cost', 'catnumber', 'oemnumber']
     if request.GET['order[0][dir]'] == 'asc':

@@ -1,5 +1,6 @@
 {% extends "orders.htm" %}
 {% load static %}
+{% load account %}
 
     {% block body %}
  <section id="auth">
@@ -10,38 +11,31 @@
      <div class="container">
 	   <div class="row section-header justify-content-center align-items-center">
 	      <div class="col-sm">
-				<h3>Войти на сайт</h3>
+				<h4>{% user_display user %}</h4>
           </div>
        </div>
        {% if messages %}
        <div class="row justify-content-center">
-          <div class="col-4">
-              <strong>Messages:</strong>
-                  <ul>
+          <div class="col-2"></div>
+          <div class="col-md-auto">
+              <strong>Сообщение:</strong>
+               <ul class="auth_messages">
             	{% for message in messages %}
             	<li>{{message}}</li>
             	{% endfor %}
-                  </ul>
+               </ul>
           </div>
+          <div class="col-2"></div>
         </div>
         {% endif %}
         <div class="row justify-content-center">
-            <div class="col-4"> 
+            <div class="col-2"></div>
+            <div class="col-8" id="allauth-content"> 
                 {% block content %}
                 {% endblock %}
             </div>
+            <div class="col-2"></div>
         </div>
-        {% if user.is_authenticated %}
-        <div class="row justify-content-center">
-            <div class="col-4"> 
-                  <strong>Menu:</strong>
-                  <ul>
-                   	<li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-                   	<li><a href="{% url 'account_logout' %}">Sign Out</a></li>
-                  </ul>
-            </div>
-        </div>
-    	{% endif %}
        </div>
 	</div>
    </div>
