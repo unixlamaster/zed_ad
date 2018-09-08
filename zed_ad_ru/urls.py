@@ -32,4 +32,4 @@ urlpatterns = [
     path('basket/itemdel', views.basket_item_delJson, name="basket_item_del_url"),
     url(r'^accounts/', include('allauth.urls')),
     path('', RedirectView.as_view(url='/catalog/', permanent=True)),
-]
+] + static(settings.STATIC_ENCRYPT_URL, document_root=settings.STATIC_ENCRYPT_ROOT)

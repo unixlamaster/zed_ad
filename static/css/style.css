@@ -1125,6 +1125,8 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #allauth-content h2 { font-size: 18px; }
 
+#allauth-content ul.errorlist { color: #f00; }
+
 #auth {
     display: table;
     width: 100%;
