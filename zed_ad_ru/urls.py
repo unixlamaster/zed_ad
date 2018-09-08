@@ -23,6 +23,8 @@ from catalog import views
 from django.conf.urls import url
 
 urlpatterns = [
+    url(r'^receiver\.html', RedirectView.as_view(url='/static/receiver.html', permanent=True)),
+    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicon.ico', permanent=True)),
     path('admin/', admin.site.urls),
     path('catalog/', include('catalog.urls')),
     path('orders/', include('orders.urls')),
