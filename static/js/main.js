@@ -170,4 +170,31 @@ jQuery(document).ready(function( $ ) {
     items: 1
   });
 
+
+  $.fn.serializeObject = function(){
+      var o = {};
+      var a = this.serializeArray();
+      $.each(a, function() {
+          if (o[this.name] !== undefined) {
+              if (!o[this.name].push) {
+                  o[this.name] = [o[this.name]];
+              }
+              o[this.name].push(this.value || '');
+          } else {
+              o[this.name] = this.value || '';
+          }
+      });
+      return o;
+  };  
+  
+ // Submit send email form
+  $(document).on('submit', '#form_send_email', function() {
+      $.post( "/catalog/send_email", JSON.stringify($('#form_send_email').serializeObject()) );
+//      alert(JSON.stringify($('#form_send_email').serializeObject()));
+      $('#sendmessage').show();
+      $('#subject').val("");
+      $('#message_body').val("");
+      return false;
+  });
+
 });

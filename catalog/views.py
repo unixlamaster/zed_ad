@@ -123,3 +123,7 @@ def basket_item_delJson(request):
     logger.error(request.session['basket'])
     respons = { "data": []}
     return JsonResponse(respons, safe=False)
+
+def send_email_Json(request):
+    respons = { "data": []}
+    return JsonResponse(respons, safe=False)

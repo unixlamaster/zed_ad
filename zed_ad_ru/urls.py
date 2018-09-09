@@ -28,6 +28,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('catalog/', include('catalog.urls')),
     path('orders/', include('orders.urls')),
+    path('chat/', include('chat.urls')),
     path('prices/', views.prices_asJson, name="my_price_data_url"),
     path('basket/index', views.basketList_asJson, name="my_basket_data_url"),
     path('basket/itemadd', views.basket_item_addJson, name="basket_item_add_url"),
