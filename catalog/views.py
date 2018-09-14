@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.sessions.models import Session
 from django.forms.models import model_to_dict
+from django.core.mail import send_mail
 import logging
     
 def index(request):
@@ -126,4 +127,13 @@ def basket_item_delJson(request):
 
 def send_email_Json(request):
     respons = { "data": []}
+#    logger = logging.getLogger(__name__)
+#    logger.error(request.POST)
+    send_mail(
+        "Письмо с сайта от " + request.POST['name'] + " - " + request.POST['subject'],
+        request.POST['message'] + "\n" + request.POST['email'],
+        'zed-ad@mail.ru',
+        ['zedautodetal@mail.ru'],
+        fail_silently=False,
+    )
     return JsonResponse(respons, safe=False)

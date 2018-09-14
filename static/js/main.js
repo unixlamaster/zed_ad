@@ -189,7 +189,11 @@ jQuery(document).ready(function( $ ) {
   
  // Submit send email form
   $(document).on('submit', '#form_send_email', function() {
-      $.post( "/catalog/send_email", JSON.stringify($('#form_send_email').serializeObject()) );
+      $.ajax({
+          type: "POST",
+          url: "{% url 'send_email_url' %}",
+          data: $('#form_send_email').serialize() });
+//      $.post( "/catalog/send_email", JSON.stringify($('#form_send_email').serializeObject()) );
 //      alert(JSON.stringify($('#form_send_email').serializeObject()));
       $('#sendmessage').show();
       $('#subject').val("");
