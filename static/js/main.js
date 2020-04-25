@@ -21,7 +21,7 @@ jQuery(document).ready(function( $ ) {
     animation: {
       opacity: 'show'
     },
-    speed: 400
+    speed: 1400
   });
 
   // Mobile Navigation
