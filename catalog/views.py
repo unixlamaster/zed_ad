@@ -37,6 +37,8 @@ def sorted_field(request):
 
 def prices_asJson(request):
 #    import pdb; pdb.set_trace()
+    return JsonResponse({}, safe=False)
+
     from django.core.paginator import Paginator
     from django.db.models import Q
     
