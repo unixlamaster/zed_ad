@@ -10,4 +10,4 @@ RUN pip install -r requirements.txt
 COPY . .
 
 EXPOSE 9001
-CMD ["python", "manage.py", "runserver", "0.0.0.0:9001"]
+CMD ["runit.sh"]
