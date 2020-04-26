@@ -1,0 +1,12 @@
+version: "2"
+services:
+  front-zed-ad.ru:
+    container_name: front-zed-ad.ru
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9001:9001"
+    volumes:
+      - /etc/nginx/conf.d:/etc/nginx/conf.d
