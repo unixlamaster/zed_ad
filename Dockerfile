@@ -10,5 +10,6 @@ COPY requirements.txt ./
 RUN pip install -r requirements.txt
 COPY . .
 
+ENV PORT 9001
 EXPOSE 9001
 CMD ["runit.sh"]
