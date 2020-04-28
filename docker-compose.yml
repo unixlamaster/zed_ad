@@ -8,5 +8,3 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9001:9001"
-    volumes:
-      - /etc/nginx/conf.d:/etc/nginx/conf.d
